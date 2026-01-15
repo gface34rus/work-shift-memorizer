@@ -25,58 +25,34 @@
         </header>
 
         <main>
-            <section id="shifts-section" class="card">
-                <h2>📅 Рабочие Смены</h2>
-                <form id="shift-form">
+            <section id="control-panel" class="card single-panel">
+                <h2>📝 Добавить запись</h2>
+                <form id="main-form">
                     <div class="form-group">
-                        <label for="workerName">Имя сотрудника</label>
-                        <input type="text" id="workerName" required placeholder="Иван Иванов">
+                        <label for="entryDate">Дата</label>
+                        <input type="date" id="entryDate" required>
                     </div>
-                    <div class="form-group">
-                        <label for="shiftDate">Дата</label>
-                        <input type="date" id="shiftDate" required>
+
+                    <div class="form-group type-selector">
+                        <label class="radio-label">
+                            <input type="radio" name="entryType" value="shift" checked>
+                            <span class="radio-custom shift-radio">📅 Смена</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="entryType" value="song">
+                            <span class="radio-custom song-radio">🎵 Песня</span>
+                        </label>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="startTime">Начало</label>
-                            <input type="time" id="startTime" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="endTime">Конец</label>
-                            <input type="time" id="endTime" required>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn-primary">Добавить смену</button>
+
+                    <button type="submit" class="btn-primary" id="add-btn">Добавить</button>
                 </form>
-                <div class="list-container">
-                    <h3>Список смен</h3>
-                    <ul id="shifts-list" class="items-list">
-                        <!-- Shifts will be loaded here -->
-                    </ul>
-                </div>
             </section>
 
-            <section id="songs-section" class="card">
-                <h2>🎵 Песни Вне Очереди</h2>
-                <form id="song-form">
-                    <div class="form-group">
-                        <label for="songTitle">Название песни</label>
-                        <input type="text" id="songTitle" required placeholder="Bohemian Rhapsody">
-                    </div>
-                    <div class="form-group">
-                        <label for="artist">Исполнитель</label>
-                        <input type="text" id="artist" required placeholder="Queen">
-                    </div>
-                    <div class="form-group">
-                        <label for="addedBy">Кто предложил</label>
-                        <input type="text" id="addedBy" placeholder="Гость">
-                    </div>
-                    <button type="submit" class="btn-secondary">Добавить песню</button>
-                </form>
+            <section id="log-section" class="card">
+                <h2>История</h2>
                 <div class="list-container">
-                    <h3>Список песен</h3>
-                    <ul id="songs-list" class="items-list">
-                        <!-- Songs will be loaded here -->
+                    <ul id="main-list" class="items-list">
+                        <!-- Items will be loaded here -->
                     </ul>
                 </div>
             </section>
