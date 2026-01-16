@@ -27,21 +27,54 @@ public class StatisticsController {
         List<Shift> shifts = shiftRepository.findAll();
         List<Song> songs = songRepository.findAll();
 
-        long shiftEarnings = shifts.stream()
+        // Lifetime earnings (all items, paid and unpaid)
+        long lifetimeShiftEarnings = shifts.stream()
                 .mapToInt(shift -> shift.getCost() != null ? shift.getCost() : 0)
                 .sum();
 
-        long songEarnings = songs.stream()
+        long lifetimeSongEarnings = songs.stream()
                 .mapToInt(song -> song.getCost() != null ? song.getCost() : 0)
                 .sum();
 
-        return new EarningsDTO(shiftEarnings, songEarnings, shiftEarnings + songEarnings);
+        // Current balance (unpaid items only)
+        long currentShiftBalance = shifts.stream()
+                .filter(shift -> !shift.isPaid())
+                .mapToInt(shift -> shift.getCost() != null ? shift.getCost() : 0)
+                .sum();
+
+        long currentSongBalance = songs.stream()
+                .filter(song -> !song.isPaid())
+                .mapToInt(song -> song.getCost() != null ? song.getCost() : 0)
+                .sum();
+
+        long lifetimeTotal = lifetimeShiftEarnings + lifetimeSongEarnings;
+        long currentTotal = currentShiftBalance + currentSongBalance;
+
+        return new EarningsDTO(lifetimeTotal, currentTotal);
+    }
+
+    @org.springframework.web.bind.annotation.PostMapping("/payout")
+    public void payout() {
+        List<Shift> shifts = shiftRepository.findAll();
+        for (Shift shift : shifts) {
+            if (!shift.isPaid()) {
+                shift.setPaid(true);
+                shiftRepository.save(shift);
+            }
+        }
+
+        List<Song> songs = songRepository.findAll();
+        for (Song song : songs) {
+            if (!song.isPaid()) {
+                song.setPaid(true);
+                songRepository.save(song);
+            }
+        }
     }
 
     @Data
     public static class EarningsDTO {
-        private final long shiftEarnings;
-        private final long songEarnings;
-        private final long totalEarnings;
+        private final long lifetimeEarnings; // Всего за всё время
+        private final long currentBalance; // Текущий баланс (с последней выплаты)
     }
 }

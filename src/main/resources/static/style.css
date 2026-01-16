@@ -95,6 +95,32 @@ header p {
     text-shadow: 0 0 20px var(--primary-glow);
 }
 
+.current-balance {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.payout-btn {
+    margin-left: 20px;
+    padding: 15px 30px;
+    background: rgba(239, 68, 68, 0.2);
+    border: 1px solid var(--danger);
+    color: var(--danger);
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    vertical-align: top;
+    height: 100%;
+}
+
+.payout-btn:hover {
+    background: var(--danger);
+    color: white;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+}
+
 /* Main Layout */
 main {
     display: flex;

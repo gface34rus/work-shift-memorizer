@@ -26,4 +26,7 @@ public class Shift {
     private LocalTime endTime;
 
     private Integer cost;
+
+    @jakarta.persistence.Column(columnDefinition = "boolean default false")
+    private boolean paid = false;
 }

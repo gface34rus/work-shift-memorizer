@@ -22,4 +22,7 @@ public class Song {
     private String addedBy; // Кто предложил/заказал
 
     private Integer cost;
+
+    @jakarta.persistence.Column(columnDefinition = "boolean default false")
+    private boolean paid = false;
 }

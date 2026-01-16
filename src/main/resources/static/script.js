@@ -36,7 +36,12 @@ document.addEventListener('DOMContentLoaded', () => {
 async function updateStats() {
     const response = await fetch('/api/stats/earnings');
     const data = await response.json();
-    document.getElementById('total-earnings').innerText = `${data.totalEarnings} ₽`;
+
+    // Lifetime = all items (paid + unpaid)
+    document.getElementById('lifetime-earnings').innerText = `${data.lifetimeEarnings} ₽`;
+
+    // Current balance = unpaid items only
+    document.getElementById('current-balance').innerText = `${data.currentBalance} ₽`;
 }
 
 async function loadData() {
@@ -138,9 +143,20 @@ async function deleteShift(id) {
 }
 
 async function deleteSong(id) {
-    if (confirm('Удалить песню?')) {
+    if (confirm('Удалить эту песню?')) {
         await fetch(`/api/songs/${id}`, { method: 'DELETE' });
         loadData();
         updateStats();
     }
 }
+
+document.getElementById('payout-btn').addEventListener('click', async () => {
+    if (confirm('Вы уверены, что хотите забрать зарплату? Это обнулит текущий счетчик.')) {
+        await fetch('/api/stats/payout', { method: 'POST' });
+        loadData();
+        updateStats();
+
+        // Confetti effect or simple alert
+        alert('💰 Зарплата выдана! Банк обнулен.');
+    }
+});
