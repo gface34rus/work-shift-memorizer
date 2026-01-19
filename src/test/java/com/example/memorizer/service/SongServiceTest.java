@@ -28,6 +28,7 @@ import static org.mockito.Mockito.*;
 class SongServiceTest {
 
     @Mock
+
     private SongRepository songRepository;
 
     @InjectMocks
